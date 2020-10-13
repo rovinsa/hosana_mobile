@@ -154,6 +154,14 @@ class ColorTheme {
     );
   }
 
+// No Input Border
+
+  static InputDecoration noBorderInput(String hint) {
+    return InputDecoration.collapsed(
+      hintText: hint,
+    );
+  }
+
 // Card Styling
 
   static BoxDecoration cardDecoration([bool noRadius]) {
@@ -199,17 +207,6 @@ class ColorTheme {
       color: color != null ? color : darkColor,
       fontSize: 14,
       fontWeight: FontWeight.w400,
-    );
-  }
-
-// Input Border
-
-  static InputDecoration inputBorder(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: darkColor),
-      ),
     );
   }
 }

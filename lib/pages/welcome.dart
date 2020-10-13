@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hosanna/pages/register.dart';
+import 'package:hosanna/pages/register_church.dart';
 import 'package:hosanna/utlilities/theme.dart';
 import 'package:hosanna/widgets/ui/button.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'login.dart';
 
@@ -17,6 +20,7 @@ class _WelcomeState extends State<Welcome> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,9 +56,9 @@ class _WelcomeState extends State<Welcome> {
                     CustomButton(
                       color: ColorTheme.primaryColor,
                       hasBorder: false,
-                      icon: Icons.person,
+                      icon: MdiIcons.accountCircle,
                       onTap: () {
-                        Get.to(Login());
+                        Get.off(Register());
                       },
                       title: 'I am a User',
                       margin: EdgeInsets.only(bottom: 15),
@@ -62,8 +66,10 @@ class _WelcomeState extends State<Welcome> {
                     CustomButton(
                       color: ColorTheme.primaryColor,
                       hasBorder: true,
-                      icon: Icons.fitness_center,
-                      onTap: () {},
+                      icon: MdiIcons.church,
+                      onTap: () {
+                        Get.off(ChurchRegister());
+                      },
                       title: 'I am a Church / Ministry',
                       margin: EdgeInsets.only(bottom: 15),
                     ),
@@ -84,7 +90,7 @@ class _WelcomeState extends State<Welcome> {
                         padding: EdgeInsets.only(left: 10),
                         child: InkWell(
                           onTap: () {
-                            Get.to(Login());
+                            Get.off(Login());
                           },
                           child: Text(
                             'Login',

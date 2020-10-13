@@ -18,7 +18,7 @@ class _IntroState extends State<Intro> {
 // on Done
 
   void onDonePress() {
-    Get.to(Welcome());
+    Get.off(Welcome());
   }
 
 // init state

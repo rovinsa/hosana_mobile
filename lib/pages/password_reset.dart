@@ -14,6 +14,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 25),
@@ -23,7 +24,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             children: [
               Container(
                 padding: EdgeInsets.all(15),
-                margin: EdgeInsets.only(top: 100, bottom: 80),
+                margin: EdgeInsets.only(top: 50, bottom: 50),
                 child: Text(
                   'Reset Password',
                   style: ColorTheme.mainHeading(ColorTheme.primaryColor),
@@ -36,7 +37,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               ),
               Padding(
                 padding:
-                    EdgeInsets.only(top: 80, left: 25, right: 25, bottom: 50),
+                    EdgeInsets.only(top: 50, left: 25, right: 25, bottom: 50),
                 child: Text(
                   'Please enter your new password',
                   style: ColorTheme.subHeading(),
@@ -72,8 +73,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                 hasBorder: false,
                 margin: EdgeInsets.only(top: 25),
                 onTap: () {
-                  Get.to(PasswordSuccess());
+                  Get.off(PasswordSuccess());
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 50),
               ),
             ],
           ),
