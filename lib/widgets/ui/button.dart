@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hosanna/utlilities/theme.dart';
 
 class CustomButton extends StatelessWidget {
 // Properties
@@ -7,19 +6,30 @@ class CustomButton extends StatelessWidget {
   final String title;
   final IconData icon;
   final bool hasBorder;
-  final Color color;
+  final Color color, textColor;
   final Function onTap;
   final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
+  final double height;
+  final bool isRound;
+  final double fontSize;
+  final bool isLoading;
 
 // Constructor
 
   CustomButton({
     this.title,
     this.color,
+    this.textColor,
     this.hasBorder,
     this.icon,
     this.onTap,
     this.margin,
+    this.padding,
+    this.height,
+    this.isRound,
+    this.fontSize,
+    this.isLoading,
   });
 
 // Build
@@ -31,12 +41,14 @@ class CustomButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.all(15),
-          height: 60,
+          padding: padding != null ? padding : EdgeInsets.all(15),
+          height: height != null ? height : 60,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: hasBorder ? Colors.transparent : color,
-            border: hasBorder ? Border.all(color: color) : null,
+            borderRadius: isRound != null && isRound
+                ? BorderRadius.circular(100)
+                : BorderRadius.circular(5),
+            color: hasBorder ? Colors.white : color,
+            border: Border.all(color: hasBorder ? color : Colors.transparent),
           ),
           child: Row(
             mainAxisAlignment: icon != null
@@ -53,12 +65,27 @@ class CustomButton extends StatelessWidget {
                       height: 0,
                     ),
               Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  title,
-                  style:
-                      ColorTheme.bodyText(hasBorder ? color : Colors.white, 1),
-                ),
+                padding: EdgeInsets.only(left: icon != null ? 15 : 0),
+                child: isLoading != null && isLoading
+                    ? Center(
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.grey[100],
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        title,
+                        style: TextStyle(
+                          color: hasBorder
+                              ? color
+                              : textColor != null ? textColor : Colors.white,
+                          fontSize: fontSize != null ? fontSize : 15,
+                        ),
+                      ),
               ),
             ],
           ),

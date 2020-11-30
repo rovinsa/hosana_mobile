@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 class ColorTheme {
 // Color Variables
   static var primaryColor = Color(0xFF075CF8);
-  static var backgroundColor = Color(0xFFF2F2F2);
+  // static var backgroundColor = Color(0xFFF2F2F2);
+  static var backgroundColor = Colors.grey.withAlpha(50);
   static var darkColor = Color(0XFF000000);
   static var lightColor = Color(0XFF000000).withAlpha(150);
   static var warning = Color(0XFFFBCB2B);
   static var danger = Color(0XFFFF7E44);
   static var success = Color(0XFF00CA8A);
+  static var blue = Color(0xFF1C96F9);
+  static var yellow = Color(0xFFD58217);
+  static var red = Color(0xFFFF3F62);
+  static var brown = Color(0xFFBF7E68);
 
 // Text Styles
 
@@ -26,11 +31,12 @@ class ColorTheme {
 
   // 2. Secondary Heading
 
-  static TextStyle secondaryHeading([Color color]) {
+  static TextStyle secondaryHeading([Color color, double lineHeight]) {
     return TextStyle(
       fontFamily: 'Roboto',
       color: color != null ? color : darkColor,
       fontSize: 14,
+      height: lineHeight != null ? lineHeight : 1,
       fontWeight: FontWeight.w500,
     );
   }
@@ -49,24 +55,26 @@ class ColorTheme {
 
   // 4. Secondary Heading
 
-  static TextStyle bodyText([Color color, double height]) {
+  static TextStyle bodyText([Color color, double height, bool bold]) {
     return TextStyle(
       fontFamily: 'Roboto',
       color: color != null ? color : darkColor,
       fontSize: 14,
       height: height != null ? height : 2,
+      fontWeight: bold != null && bold ? FontWeight.bold : FontWeight.normal,
     );
   }
 
   // 5. Small Text
 
-  static TextStyle bodySmall([Color color]) {
+  static TextStyle bodySmall([Color color, double height]) {
     return TextStyle(
       fontFamily: 'Roboto',
       color: color != null ? color : lightColor,
-      fontSize: 10,
-      fontWeight: FontWeight.w200,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
       decoration: TextDecoration.none,
+      height: height != null ? height : 1,
     );
   }
 
@@ -164,49 +172,26 @@ class ColorTheme {
 
 // Card Styling
 
-  static BoxDecoration cardDecoration([bool noRadius]) {
+  static BoxDecoration cardDecoration(
+      [bool noRadius, double radius, Color borderColor]) {
     return BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(noRadius != null && noRadius ? 0 : 5),
+      borderRadius: BorderRadius.circular(
+        noRadius != null && noRadius ? 0 : radius != null ? radius : 10,
+      ),
       border: Border.all(
-        color: lightColor,
-        width: 1,
+        color: borderColor != null
+            ? borderColor
+            : ColorTheme.lightColor.withAlpha(30),
+        width: borderColor != null ? 2 : 1,
         style: BorderStyle.solid,
       ),
-    );
-  }
-
-// Card Title
-
-  static TextStyle cardTitle([Color color]) {
-    return TextStyle(
-      fontFamily: 'Roboto',
-      color: color != null ? color : darkColor,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      height: 1,
-    );
-  }
-
-// Card subtitle
-
-  static TextStyle cardSubTitle([Color color]) {
-    return TextStyle(
-      fontFamily: 'Roboto',
-      color: color != null ? color : darkColor,
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-    );
-  }
-
-// Card subtitle
-
-  static TextStyle cardBody([Color color]) {
-    return TextStyle(
-      fontFamily: 'Roboto',
-      color: color != null ? color : darkColor,
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withAlpha(30),
+          blurRadius: 10,
+        ),
+      ],
     );
   }
 }

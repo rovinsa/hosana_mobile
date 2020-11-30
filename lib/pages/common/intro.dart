@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hosanna/pages/welcome.dart';
+import 'package:hosanna/pages/common/login.dart';
+import 'package:hosanna/utlilities/helper.dart';
 import 'package:hosanna/utlilities/theme.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -18,7 +18,7 @@ class _IntroState extends State<Intro> {
 // on Done
 
   void onDonePress() {
-    Get.off(Welcome());
+    Helper.off(Login());
   }
 
 // init state
@@ -82,17 +82,21 @@ class _IntroState extends State<Intro> {
 // Build
   @override
   Widget build(BuildContext context) {
-    return IntroSlider(
-      slides: this.slides,
-      onDonePress: this.onDonePress,
-      renderDoneBtn: renderDoneBtn(),
-      renderNextBtn: renderNextBtn(),
-      renderPrevBtn: renderPrevBtn(),
-      backgroundColorAllSlides: Colors.white,
-      colorActiveDot: ColorTheme.primaryColor,
-      isShowPrevBtn: true,
-      isShowSkipBtn: false,
-      colorDot: Colors.grey[300],
+    return Scaffold(
+      body: Center(
+        child: IntroSlider(
+          slides: this.slides,
+          onDonePress: this.onDonePress,
+          renderDoneBtn: renderDoneBtn(),
+          renderNextBtn: renderNextBtn(),
+          renderPrevBtn: renderPrevBtn(),
+          backgroundColorAllSlides: Colors.white,
+          colorActiveDot: ColorTheme.primaryColor,
+          isShowPrevBtn: true,
+          isShowSkipBtn: false,
+          colorDot: Colors.grey[300],
+        ),
+      ),
     );
   }
 
