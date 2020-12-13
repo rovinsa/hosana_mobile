@@ -9,8 +9,14 @@ import 'package:hosanna/widgets/ui/list_card.dart';
 import 'package:hosanna/widgets/ui/reactions.dart';
 import 'package:hosanna/widgets/ui/stat_card.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:hosanna/model/post.dart';
+import 'package:hosanna/utlilities/helper.dart';
 
 class EventDetails extends StatefulWidget {
+  PostModel post;
+
+  EventDetails(this.post);
+
   @override
   _EventDetailsState createState() => _EventDetailsState();
 }
@@ -59,7 +65,8 @@ class _EventDetailsState extends State<EventDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'SUN, AT 11:00 AM – 12:00 PM',
+                              "${Helper.getDayNameDate(widget.post.date??"")} AT ${widget.post.startTime??""} - ${widget.post.endTime??""}",
+                              // 'SUN, AT 11:00 AM – 12:00 PM',
                               style:
                                   ColorTheme.bodySmall(ColorTheme.primaryColor),
                             ),
@@ -67,14 +74,14 @@ class _EventDetailsState extends State<EventDetails> {
                               padding: EdgeInsets.only(bottom: 5),
                             ),
                             Text(
-                              'Christmas Celebration',
+                              widget.post.title??'Christmas Celebration',
                               style: ColorTheme.secondaryHeading(),
                             ),
                             Padding(
                               padding: EdgeInsets.only(bottom: 5),
                             ),
                             Text(
-                              'Winston Church',
+                              widget.post.address??'Winston Church',
                               style: ColorTheme.bodySmall(
                                 ColorTheme.lightColor,
                               ),
@@ -95,7 +102,7 @@ class _EventDetailsState extends State<EventDetails> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              '11',
+                              Helper.getDayDigit2(widget.post.date),
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 18,
@@ -103,7 +110,7 @@ class _EventDetailsState extends State<EventDetails> {
                               ),
                             ),
                             Text(
-                              'OCT'.toUpperCase(),
+                              Helper.getMonthName2(widget.post.date).toUpperCase(),
                               style: ColorTheme.bodySmall(
                                 ColorTheme.darkColor,
                               ),

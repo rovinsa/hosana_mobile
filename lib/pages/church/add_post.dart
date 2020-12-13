@@ -17,7 +17,7 @@ import 'package:hosanna/widgets/ui/list_card.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mime_type/mime_type.dart';
-import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker/file_picker.dart';
 
 class AddPost extends StatefulWidget {
   final String type;
@@ -281,11 +281,12 @@ class _AddPostState extends State<AddPost> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        _video = File(pickedFile.path);
+        _image = File(pickedFile.path);
         List<int> imageBytes = _image.readAsBytesSync();
-        vidAttach.add(imageBytes);
+        imageAttach.add(imageBytes);
 
-        videos.add(_video);
+        print('imageBytes ${imageBytes.length}');
+        images.add(_image);
         setState(() {
           selectedImageBytes = imageBytes;
           type = mime(pickedFile.path);
@@ -334,8 +335,8 @@ class _AddPostState extends State<AddPost> {
                 decoration: ColorTheme.cardDecoration(),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                    images[index].path,
+                  child: Image.file(
+                    (images[index])??"",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -425,27 +426,39 @@ class _AddPostState extends State<AddPost> {
 
   selectVideo() async {
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
-
+    if (pickedFile != null) {
+      _video = File(pickedFile.path);
+      _videoBytes = _video.readAsBytesSync();
+      vidAttach.add(_videoBytes);
+      videos.add(_video);
+      print('video selected.');
+      // print('video path ${images[0].uri}.');
+    } else {
+      print('No image selected.');
+    }
     setState(() {
-      if (pickedFile != null) {
-        _video = File(pickedFile.path);
-        _videoBytes = _video.readAsBytesSync();
-        images.add(_image);
-      } else {
-        print('No image selected.');
-      }
+
     });
   }
 
 // Select File
 
   selectAudio() async {
-    File file = await FilePicker.getFile(type: FileType.audio);
-    if (file != null) {
-      _audioFile = File(file.path);
-      List<int> audioBytes = _audioFile.readAsBytesSync();
-      selectedAudioBytes = audioBytes;
-    }
+    // File file = await FilePicker.getFile(type: FileType.audio);
+    // if (file != null) {
+    //   _audioFile = File(file.path);
+    //   List<int> audioBytes = _audioFile.readAsBytesSync();
+    //   selectedAudioBytes = audioBytes;
+    // }
+    // FilePickerResult result = await FilePicker.platform.pickFiles();
+    //
+    // if(result != null) {
+    //   File file = File(result.files.single.path);
+    //     List<int> audioBytes = _audioFile.readAsBytesSync();
+    //     selectedAudioBytes = audioBytes;
+    // } else {
+    //   // User canceled the picker
+    // }
   }
 
 // Send Post
@@ -461,38 +474,38 @@ class _AddPostState extends State<AddPost> {
 
       var attachments = [];
 
-      for (var i = 0; i < imageAttach.length; i++) {
+      // try{
+        for (var i = 0; i < imageAttach.length; i++) {
         attachments.add(
-          json.encode(
             {
               "title": null,
               "thumbnail": null,
-              "extension": images[i].path,
-              "file": imageAttach[i],
+              "extension":null,// images[i].path,
+              "file": base64.encode(imageAttach[i]),
             },
-          ),
         );
       }
-      for (var i = 0; i < vidAttach.length; i++) {
+      // }catch(e){print("Error: ${e.toString()}");}
+
+      try{for (var i = 0; i < vidAttach.length; i++) {
         attachments.add(
-          json.encode(
             {
               "title": null,
               "thumbnail": null,
               "extension": videos[i].path,
-              "file": vidAttach[i],
+              "file": base64.encode(vidAttach[i]),
             },
-          ),
         );
-      }
+      }}catch(e){print("Error: ${e.toString()}");}
+      try{}catch(e){print("Error: ${e.toString()}");}
+
       var data = json.encode({
-        {
-          "attachments": null,
+          "attachments": attachments,
           "privacy": privacyText,
           "tag": selectedTag,
           "description": msgCtrl.text,
           "post_type": widget.typeId,
-        }
+
       });
       String token = await SharedPrefManager.getString(SharedPrefManager.token);
 
@@ -501,6 +514,7 @@ class _AddPostState extends State<AddPost> {
         data,
         token,
       );
+      print("request to be sent ; ${request.body.toString()}");
       request.post().then((response) {
         print(response);
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -547,7 +561,9 @@ class _AddPostState extends State<AddPost> {
                       'Publish',
                       style: ColorTheme.bodyText(ColorTheme.primaryColor, 1),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                   )
                 : Container()
           ],
@@ -716,7 +732,7 @@ class _AddPostState extends State<AddPost> {
           "thumbnail": null,
           "thumbnail_extension": null,
           "extension": type,
-          "file": selectedImageBytes,
+          "file": base64.encode(selectedImageBytes),
         }
       ],
       "shared_in_post": shareInPost,
@@ -730,6 +746,7 @@ class _AddPostState extends State<AddPost> {
       data,
       token,
     );
+    print("Request: ${request.toString()}");
     request.post().then((response) {
       print(response);
       if (response.statusCode == 200 || response.statusCode == 201) {

@@ -3,6 +3,8 @@ import 'package:hosanna/main.dart';
 import 'package:hosanna/utlilities/Strings.dart';
 import 'package:hosanna/utlilities/theme.dart';
 import 'package:hosanna/widgets/ui/reactions.dart';
+import 'package:hosanna/model/post.dart';
+import 'package:get/get.dart';
 
 class PostDetails extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class PostDetails extends StatefulWidget {
 }
 
 class _PostDetailsState extends State<PostDetails> {
+  PostModel post = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,13 +44,14 @@ class _PostDetailsState extends State<PostDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Grant Marshal',
+                      // 'Grant Marshal',
+                      post.title,
                       style: ColorTheme.secondaryHeading(),
                     ),
                     Row(
                       children: [
                         Text(
-                          '1h',
+                          post.parsedTime,
                           style: ColorTheme.bodySmall(
                             ColorTheme.lightColor,
                           ),
@@ -85,7 +90,7 @@ class _PostDetailsState extends State<PostDetails> {
                   Padding(
                     padding: EdgeInsets.all(25),
                     child: Text(
-                      Strings.lorem,
+                      post.description,
                       style: ColorTheme.bodyText(),
                     ),
                   ),
@@ -134,7 +139,7 @@ class _PostDetailsState extends State<PostDetails> {
                 decoration: ColorTheme.cardDecoration(false, 50),
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 0),
-                  child: Reactions(),
+                  child: Reactions(post: post,),
                 ),
               ),
             ),

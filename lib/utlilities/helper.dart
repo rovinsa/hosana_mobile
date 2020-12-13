@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:hosanna/utlilities/theme.dart';
+import 'package:intl/intl.dart';
 
 class Helper {
 ////////////////////
@@ -79,5 +80,50 @@ class Helper {
       return 'Enter Valid Email';
     else
       return null;
+  }
+
+  static String getDayDigit(DateTime d) {
+// Indian Mobile number are of 10 digit only
+    return DateFormat("dd").format(d);
+  }
+
+  static String getDayName(DateTime d) {
+// Indian Mobile number are of 10 digit only
+    return DateFormat("EEEE").format(d);
+  }
+
+  static String getMonthName(DateTime d) {
+// Indian Mobile number are of 10 digit only
+    return DateFormat("MMM").format(d);
+  }
+
+  static String getDayDigit2(String date) {
+    if(date==null || date.isEmpty)
+      return "Err";
+    DateFormat format = new DateFormat("yyyy-MM-dd");
+    DateTime d = format.parse(date);
+    return DateFormat("dd").format(d);
+  }
+  static String getDayName2(String date) {
+    if(date==null || date.isEmpty)
+      return "Err";
+    DateFormat format = new DateFormat("yyyy-MM-dd");
+    DateTime d = format.parse(date);
+    return DateFormat("EEEE").format(d);
+  }
+  static String getMonthName2(String date) {
+    if(date==null || date.isEmpty)
+      return "Err";
+    DateFormat format = new DateFormat("yyyy-MM-dd");
+    DateTime d = format.parse(date);
+    return DateFormat("MMM").format(d);
+  }
+  static String getDayNameDate(String date) {
+    if(date==null || date.isEmpty)
+      return "Invalid-Date";
+    // 2020-11-22
+    DateFormat format = new DateFormat("yyyy-MM-dd");
+    DateTime d = format.parse(date);
+    return DateFormat("EEEE, MMM dd").format(d);
   }
 }

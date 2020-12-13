@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:hosanna/utlilities/hosana_icons.dart';
 import 'package:hosanna/utlilities/theme.dart';
 import 'package:hosanna/widgets/ui/reactions.dart';
+import 'package:hosanna/model/post.dart';
 
 class FeedCard extends StatelessWidget {
 // Properties
-
+  PostModel post;
   final String name, text, time, userImage;
   final Function onTap;
 
 // Constructor
 
-  FeedCard({this.name, this.time, this.text, this.userImage, this.onTap});
+  FeedCard({this.post,this.name, this.time, this.text, this.userImage, this.onTap});
 
 // Build
 
@@ -88,7 +89,7 @@ class FeedCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy  … text ever since the 1500s',
+                post.description,//'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy  … text ever since the 1500s',
                 style: ColorTheme.bodyText(
                   ColorTheme.darkColor,
                   1.5,
@@ -97,6 +98,7 @@ class FeedCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            post.attachments.length==0?SizedBox():
             Container(
               height: 200,
               child: Row(
@@ -106,7 +108,8 @@ class FeedCard extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 1),
                       child: ExtendedImage.network(
-                        'https://picsum.photos/300/201',
+                        post.attachments[0]??'https://picsum.photos/300/201',
+                        // 'https://picsum.photos/300/201',
                         fit: BoxFit.fill,
                         cache: true,
                         shape: BoxShape.rectangle,
@@ -115,27 +118,37 @@ class FeedCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 1),
-                      child: ExtendedImage.network(
-                        'https://picsum.photos/300/202',
-                        fit: BoxFit.fill,
-                        cache: true,
-                        shape: BoxShape.rectangle,
-                        height: 180,
-
-                        //cancelToken: cancellationToken,
-                      ),
-                    ),
-                  )
+                  SizedBox(width: 5,),
+                  getSecondImage(context)
                 ],
               ),
             ),
-            Reactions(),
+            Reactions(post: post,),
           ],
         ),
       ),
     );
   }
+
+  Widget getSecondImage(BuildContext context) {
+
+    if(post.attachments.asMap()[1]==null)
+      return SizedBox(width: 10,);
+    else
+      return Expanded(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 1),
+          child: ExtendedImage.network(
+            // 'https://picsum.photos/300/202',
+            post.attachments.asMap()[1],
+            fit: BoxFit.fill,
+            cache: true,
+            shape: BoxShape.rectangle,
+            height: 180,
+            //cancelToken: cancellationToken,
+          ),
+        ),
+      );
+  }
+
 }

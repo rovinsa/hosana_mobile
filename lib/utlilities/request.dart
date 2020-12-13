@@ -22,6 +22,7 @@ class Request {
         headers: {
           "Authorization": "Bearer $token",
           "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/json",
         },
       ),
     );

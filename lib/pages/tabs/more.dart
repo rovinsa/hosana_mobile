@@ -38,9 +38,7 @@ class _MoreState extends State<More> {
       user = userData;
     });
   }
-
 // Logout User
-
   Future logout() async {
     FocusScope.of(context).requestFocus(new FocusNode());
     setState(() {
@@ -54,7 +52,6 @@ class _MoreState extends State<More> {
         setState(() {
           appCtrl.isLoading = false;
         });
-        Helper.off(Login());
       } else {
         setState(() {
           appCtrl.isLoading = false;
@@ -62,6 +59,8 @@ class _MoreState extends State<More> {
         print(response.data);
         Helper.showMessage(response.data['message'], context);
       }
+
+      Helper.off(Login());
     });
   }
 

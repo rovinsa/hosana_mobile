@@ -5,12 +5,15 @@ import 'package:hosanna/pages/events/upcoming.dart';
 import 'package:hosanna/utlilities/theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+
 class EventsPage extends StatefulWidget {
   @override
   _EventsPageState createState() => _EventsPageState();
 }
 
 class _EventsPageState extends State<EventsPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -24,9 +27,10 @@ class _EventsPageState extends State<EventsPage> {
               indicatorColor: ColorTheme.primaryColor,
               unselectedLabelColor: ColorTheme.lightColor,
               labelColor: ColorTheme.primaryColor,
+              labelStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
               tabs: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
                   child: Row(
                     children: [
                       Icon(
@@ -40,7 +44,7 @@ class _EventsPageState extends State<EventsPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                  padding: EdgeInsets.symmetric( vertical: 15),
                   child: Row(
                     children: [
                       Icon(
@@ -54,7 +58,7 @@ class _EventsPageState extends State<EventsPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 2, vertical: 15),
                   child: Row(
                     children: [
                       Icon(

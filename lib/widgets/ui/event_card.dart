@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:hosanna/pages/events/event_details.dart';
 import 'package:hosanna/utlilities/helper.dart';
 import 'package:hosanna/utlilities/theme.dart';
+import 'package:hosanna/model/post.dart';
 
 import 'button.dart';
 
 class EventCard extends StatelessWidget {
+  PostModel post;
+  EventCard(this.post);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +18,7 @@ class EventCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Helper.to(
-            EventDetails(),
+            EventDetails(post),
           );
         },
         child: Column(
@@ -40,21 +44,22 @@ class EventCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'SUN, AT 11:00 AM – 12:00 PM',
+                          "${Helper.getDayNameDate(post.date??"")} AT ${post.startTime??""} - ${post.endTime??""}",
+                          // post.date??'SUN, AT 11:00 AM – 12:00 PM',
                           style: ColorTheme.bodySmall(ColorTheme.primaryColor),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 5),
                         ),
                         Text(
-                          'Christmas Celebration',
+                          post.title??'Christmas Celebration',
                           style: ColorTheme.secondaryHeading(),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 5),
                         ),
                         Text(
-                          'Winston Church',
+                          post.address??'Winston Church',
                           style: ColorTheme.bodySmall(
                             ColorTheme.lightColor,
                           ),
@@ -76,7 +81,7 @@ class EventCard extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          '11',
+                          Helper.getDayDigit2(post.date),
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 18,
@@ -84,7 +89,7 @@ class EventCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'OCT'.toUpperCase(),
+                            Helper.getMonthName2(post.date).toUpperCase(),
                           style: ColorTheme.bodySmall(
                             ColorTheme.darkColor,
                           ),
